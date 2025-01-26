@@ -1,0 +1,74 @@
+Sub auto_database()
+
+    MsgBox ("WELCOME TO GRADE CALCULATOR")
+    Dim n As String
+    Dim a As Long
+    Dim b As Long
+    Dim c As Long
+    Dim R As Long
+    Dim D As Double
+    Dim G As String
+    
+    n = InputBox("enter the NAME : ")
+    a = InputBox("enter the MATH number : ")
+    If a < 0 Or a > 100 Then
+    MsgBox ("INVALID Marks! Try Again")
+    Exit Sub
+    End If
+    
+    b = InputBox("enter the ENG number : ")
+    If b < 0 Or b > 100 Then
+    MsgBox ("INVALID Marks! Try Again")
+    Exit Sub
+    End If
+    
+    c = InputBox("enter the COMPUTER number : ")
+    If c < 0 Or c > 100 Then
+    MsgBox ("INVALID Marks! Try Again")
+    Exit Sub
+    End If
+    
+    R = a + b + c
+    D = R / 3
+    
+    Range("B1").Value = n
+    Range("B2").Value = a
+    Range("B3").Value = b
+    Range("B4").Value = c
+    Range("B5").Value = R
+    Range("B6").Value = D
+    
+    Cells(7, 2).Select
+    ActiveCell.FormulaR1C1 = _
+    "=IF(R6C2>90,""AA"",IF(R6C2>80,""A+"",IF(R6C2>70,""A"",IF(R6C2>60,""B+"",IF(R6C2>50,""B"",IF(R6C2>40,""C+"",IF(R6C2>30,""C"",""FAIL"")))))))"
+    
+    G = Cells(7, 2).Value
+    
+    Sheets("e").Select
+    Range("b1").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.Copy
+    Sheets("f").Select
+    Range("a1").Select
+    Selection.End(xlDown).Select
+    Selection.End(xlDown).Select
+    Selection.End(xlUp).Select
+    ActiveCell.offset(1, 0).Select
+    Selection.PasteSpecial Paste:=xlPasteAll, Operation:=xlNone, SkipBlanks:= _
+    False, Transpose:=True
+    
+    
+    Sheets("e").Select
+    Cells(150, 150).Select
+    Selection.Copy
+    Range("b1:b7").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+    :=False, Transpose:=False
+    ActiveCell.Select
+    
+    MsgBox (G)
+    MsgBox ("Completed Successfully! Thank You")
+    
+End Sub
+
+
